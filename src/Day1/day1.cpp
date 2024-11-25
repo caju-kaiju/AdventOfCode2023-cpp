@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <optional>
+#include <string>
 
 int main() {
     std::ifstream file{"day1_input.txt"};
@@ -13,9 +14,13 @@ int main() {
     std::string line{""};
     std::optional<char> first;
     std::optional<char> last;
+    unsigned int sum{0U};
+
     while (std::getline(file, line)) {
-        for (unsigned int i = 0; i < line.size(); i++) {
+        for (unsigned int i = 0U; i < line.size(); i++) {
             auto current_char = line.at(i);
+
+            // If we are not looking at a digit, skip to the next iteration
             if (!std::isdigit(current_char)) continue;
 
             if (!first) {
@@ -25,16 +30,19 @@ int main() {
             }
         }
 
-        if (first) std::cout << first.value() << " ";
-        if (last) std::cout << last.value();
-        std::cout << "\n";
+        // If first is not set, then we have no numbers. Skip to the next iteration
+        if (!first) continue;
+
+        // If last is not set, then first and last are the same number
+        if (!last) last = first.value();
+
+        line = {first.value(), last.value()};
+        sum += std::stoul(line);
 
         first.reset();
         last.reset();
     }
 
-
-
-
+    std::cout << sum << std::endl;
     return 0;
 }
