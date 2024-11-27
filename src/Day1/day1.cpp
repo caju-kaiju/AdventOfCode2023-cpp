@@ -17,7 +17,6 @@ int main() {
     unsigned int sum{0U};
 
     while (std::getline(file, line)) {
-        // for (unsigned int i = 0U; i < line.size(); i++) {
         for (auto const c : line) {
             // If we are not looking at a digit, skip to the next iteration
             if (!std::isdigit(c)) continue;
